@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do-WebApp</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="light-mode">
+    <button class="mood-btn" id="mood-change" onclick="changeMood()"></button>
+    <div class="error-box"></div>
+    <div class="prompt">
+        <h2>Update todo</h2>
+        <input type="text" autocomplete="off" id="update-todo" placeholder="Update">
+    </div>
+    <div class="container">
+        <div class="app">
+            <h1>TO DO APP</h1>
+
+            <div class="form">
+                <input type="text" id="user-input" placeholder="Add to do's here" autocomplete="off">
+                <button class="btn" id="submit-btn" onclick="addToDo()">Add TO-DO's</button>
+            </div>
+
+            <div class="all-todos">
+                <div class="todos">
+                    <h2>PENDING</h2>
+                    <div id="pending" class="pending-todos todo-box"></div>
+                </div>
+
+                <div class="todos">
+                    <h2>PROCESSING</h2>
+                    <div id="process" class="process-todos todo-box"></div>
+                </div>
+
+                <div class="todos">
+                    <h2>COMPLETE</h2>
+                    <div id="complete" class="complete-todos todo-box"></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

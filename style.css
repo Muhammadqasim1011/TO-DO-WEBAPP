@@ -149,7 +149,7 @@ li img {
 
 .message-box {
     position: absolute;
-    top: 25px;
+    top: 125px;
     left: 50%;
     transform: translateX(-50%);
     background: #ffd000;
@@ -158,6 +158,7 @@ li img {
     opacity: 0;
     animation: animatemessage 1s ease-out forwards;
     display: none;
+    text-align: center;
 }
 
 .prompt {
@@ -292,6 +293,10 @@ li img {
     }
 
     .prompt-box{
+        width: 90%;
+    }
+
+    .message-box{
         width: 90%;
     }
 }

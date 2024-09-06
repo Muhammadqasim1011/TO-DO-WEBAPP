@@ -149,7 +149,7 @@ li img {
 
 .message-box {
     position: absolute;
-    top: 125px;
+    top: 25px;
     left: 50%;
     transform: translateX(-50%);
     background: #ffd000;
@@ -298,5 +298,6 @@ li img {
 
     .message-box{
         width: 90%;
+        top: 40px;
     }
 }

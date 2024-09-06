@@ -83,7 +83,7 @@ nav a:hover {
     gap: 1rem;
 }
 
-.input-box input {
+ input {
     padding: 1rem;
     max-width: 700px;
     width: 100%;
@@ -94,6 +94,7 @@ nav a:hover {
 button {
     width: 140px;
     font-size: 1.2rem;
+    padding: 0.8rem 1rem;
     border: none;
     background: #ffd000;
     color: white;
@@ -198,7 +199,7 @@ li img {
     opacity: 1;
 }
 
-.prompt .prompt-box input {
+/* .prompt .prompt-box input {
     padding: 0.5rem;
     border-radius: 5px;
     border: #444 solid 2px;
@@ -208,11 +209,10 @@ li img {
     width: 100%;
     margin: 0 auto;
     padding: 1rem;
-}
+} */
 
 .prompt .btn{
     margin: 0 auto;
-    padding: 0.8rem 1rem;
 }
 
 
@@ -244,7 +244,15 @@ li img {
 }
 @media (max-width:700px) {
     header{
-        height: 70px;
+        height: 50px;
+    }
+
+    header h1{
+        font-size: 1.5rem;
+    }
+
+    a{
+        font-size: 0.8rem;
     }
 
     .app-container{
@@ -254,6 +262,25 @@ li img {
         padding: 0.4rem;
     }
 
+    .addtask-section h1{
+        font-size: 1.4rem;
+    }
+
+    .input-box{
+        flex-direction: column;
+    }
+
+    .input-box input{
+        padding: 0.7rem;
+        border: 1px solid ;
+    }
+
+    .btn{
+        width: 100%;
+        padding: 10px;
+        font-size: 13px;
+    }
+
     .all-todos{
         grid-template-columns: 1fr;
     }
@@ -261,6 +288,10 @@ li img {
         padding: 0.7rem;
     }
     .all-todos li{
-        padding: 7px 0.7rem;
+        padding: 4px 0.7rem;
+    }
+
+    .prompt-box{
+        width: 90%;
     }
 }

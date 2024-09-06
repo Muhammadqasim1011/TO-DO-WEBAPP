@@ -78,6 +78,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 **Muhammad Qasim**
 
-- GitHub: [@your-github-username](https://github.com/Muhammadqasim1011)
-- LinkedIn: [@your-linkedin-profile](www.linkedin.com/in/-muhammad-qasim)
+- GitHub: [Muhammad Qasim](https://github.com/Muhammadqasim1011)
+- LinkedIn: [Muhammad Qasim](www.linkedin.com/in/-muhammad-qasim)
 ```

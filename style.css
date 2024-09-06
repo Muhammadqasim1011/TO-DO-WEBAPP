@@ -1,143 +1,108 @@
-:root {
-
-    --black-clr: #000;
-    --white-clr: #fff;
-    --dark-clr: #141414;
-    --light-clr: #eeeeee;
-    --primary-clr: #1b42c4;
-    --hover-clr: #16369f;
-    --yellow-clr: #d67d09;
-    --green-clr: #40c41b;
-}
-
 * {
     padding: 0;
     margin: 0;
     box-sizing: border-box;
-    border: none;
-    outline: none;
     list-style: none;
+    color: #444;
     font-family: sans-serif;
-}
-
-body.light-mode {
-    --dark-clr: #141414;
-    --light-clr: #eeeeee;
-    --black-clr: #000;
-    --white-clr: #fff;
-    --box-shadow-samll: 0 0 30px rgba(0, 0, 0, 0.2);
-}
-
-body.dark-mode {
-    --dark-clr: #eeeeee;
-    --light-clr: #141414;
-    --black-clr: #fff;
-    --white-clr: #000;
-    --box-shadow-samll: 0 0 30px rgba(255, 255, 255, 0.1);
-}
-
-.mood-btn {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    padding: 2rem;
-    background: var(--dark-clr);
-    color: var(--light-clr);
-    border-radius: 49%;
-    cursor: pointer;
-}
-
-.error-box {
-    position: absolute;
-    top: 20px;
-    padding: 0.3rem 1rem;
+    text-decoration: none;
     border-radius: 10px;
-    font-size: 1.3rem;
-    opacity: 0;
-    user-select: none;
-    transition: 0.2s;
-    background: red;
-}
-
-.show {
-    background: var(--dark-clr);
-    opacity: 1 !important;
-    color: red;
-}
-
-.success{
-    background: var(--green-clr);
-    color: var(--white-clr);
-    opacity: 1 !important;
 }
 
 body {
+    background: linear-gradient(#ffd000, #b35f00);
+    min-height: 100vh;
+}
+
+header {
+    background: #eee;
+    padding: 1rem;
+    max-width: 1300px;
+    width: 94%;
+    height: 100px;
+    margin: auto;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+
     display: flex;
     align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-    background: var(--white-clr);
-    color: var(--dark-clr);
+    justify-content: space-between;
+    gap: 1rem;
 }
 
-button {
-    text-transform: uppercase;
-}
-.container {
-    max-width: 1140px;
-    width: 90%;
-    margin: 7rem auto;
-    background: var(--light-clr);
-    padding: 2rem;
-    border-radius: 10px;
-    box-shadow: var(--box-shadow-samll);
+nav {
+    display: flex;
+    gap: 1rem;
+    font-weight: 600;
 }
 
-.app {
+a {
+    transition: color 0.3s;
+}
+
+nav a:hover {
+    color: #b35f00;
+}
+
+.app-container {
+    background: #eee;
     display: flex;
     flex-direction: column;
     gap: 3rem;
-}
-
-.app h1 {
-    font-size: 2.4rem;
-    color: #fff;
-    background: var(--primary-clr);
-    padding: 1rem 3rem;
-    width: fit-content;
+    max-width: 1300px;
+    width: 94%;
     margin: auto;
     border-radius: 10px;
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+    padding: 1rem;
 }
 
-.app .form {
+.addtask-section {
     display: flex;
+    flex-direction: column;
+    align-items: center;
     gap: 1rem;
-    padding-bottom: 2rem;
-    border-bottom: 2px solid var(--dark-clr);
+    justify-content: center;
+    width: 100%;
+    background: white;
+    padding: inherit;
+
 }
 
-.form input {
-    width: 90%;
-    border-radius: 10px;
-    padding: 1.4rem 1rem;
-    background: var(--white-clr);
-    color: var(--dark-clr);
+.addtask-section h1 {
+    background: #ffd000;
+    padding: inherit;
+    color: white;
+}
+
+.input-box {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    gap: 1rem;
+}
+
+.input-box input {
+    padding: 1rem;
+    max-width: 700px;
+    width: 100%;
+    border: 2px solid;
     font-size: 1rem;
 }
 
-.app .btn {
-    width: 180px;
-    background: var(--primary-clr);
-    border-radius: 10px;
-    color: #fff;
-    font-weight: bold;
-    font-size: 1.1rem;
-    transition: all 0.3s;
+button {
+    width: 140px;
+    font-size: 1.2rem;
+    border: none;
+    background: #ffd000;
+    color: white;
+    transition: background 0.3s;
     cursor: pointer;
 }
 
-.app .btn:hover {
-    background: var(--hover-clr);
+button:hover {
+    background: #ffae00;
 }
 
 .all-todos {
@@ -146,52 +111,52 @@ button {
     gap: 1rem;
 }
 
-.todos {
-    display: flex;
-    flex-direction: column;
-    gap: 0.4rem;
-    background: var(--white-clr);
+.all-todos>div {
     padding: 1rem;
-    border-radius: 10px;
+    background: white;
 }
 
-.todos h2 {
-    border-bottom: 1px solid var(--dark-clr);
-    /* width: fit-content; */
-    margin-bottom: 10px;
-}
-
-.todo-box {
-    display: flex;
-    flex-direction: column;
-    gap: 0.7rem;
-}
-
-.todos li {
+.all-todos li {
     border-radius: 10px;
     color: #fff;
+    background: blue;
     padding: 10px 1rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-bottom: 10px;
 }
 
-.pending-todos li {
-    background: var(--primary-clr);
+.all-todos h2 {
+    text-transform: uppercase;
+    margin-bottom: 1rem;
 }
 
-.process-todos li {
-    background: var(--yellow-clr);
-}
-
-.complete-todos li {
-    background: var(--green-clr);
-}
-
-.all-todos img {
-    width: 34px;
+li img {
+    width: 30px;
     cursor: pointer;
-    margin-left: 8px;
+    margin-left: 4px;
+}
+
+.all-todos .process li {
+    background: orange;
+}
+
+.all-todos .complete li {
+    background: green;
+}
+
+.message-box {
+    position: absolute;
+    top: 25px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #ffd000;
+    padding: 1rem;
+    font-weight: 600;
+    opacity: 0;
+    animation: animatemessage 1s ease-out forwards;
+    display: none;
 }
 
 .prompt {
@@ -199,68 +164,103 @@ button {
     display: flex;
     justify-content: center;
     flex-direction: column;
-    gap: 2rem;
     background-color: rgba(0, 0, 0, 0.8);
     z-index: 10;
-    visibility: hidden; Hidden by default
+    visibility: hidden;
     opacity: 0;
     transition: opacity 0.3s ease-in-out;
-    width: 90%;
-    max-width: 499px;
-    height: 300px;
+    width: 100%;
+    height: 100%;
     padding: 1rem;
+    border-radius: 0;
 }
 
-.prompt *, .prompt {
-    border-radius: 10px;
+.prompt-box{
+    background: #eee;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin: auto;
+    padding: 4%;
+    width: 70%;
 }
+
 .prompt h2{
     color: #fff;
-    background: var(--primary-clr);
-    width: fit-content;
+    background: #ffd000;
     padding: 0.7rem;
     margin: 0 auto;
     text-transform: uppercase;
 }
 
-.prompt .btn-update{
-    padding: 0.7rem;
-    background: var(--primary-clr);
-    color: #fff;
-}
 .prompt.show {
     visibility: visible;
     opacity: 1;
 }
 
-.prompt input {
+.prompt .prompt-box input {
     padding: 0.5rem;
     border-radius: 5px;
+    border: #444 solid 2px;
     font-size: 1.2rem;
     background: var(--light-clr);
     color: var(--dark-clr);
     width: 100%;
+    margin: 0 auto;
     padding: 1rem;
 }
 
+.prompt .btn{
+    margin: 0 auto;
+    padding: 0.8rem 1rem;
+}
 
-@media (max-width:1100px) {
+
+
+@keyframes animatemessage {
+    from {
+        opacity: 0;
+        top: -125px;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.message-box p {
+    color: #fff;
+}
+
+@media (max-width:1200px) {
+    li img {
+        width: 20px;
+    }
+}
+@media (max-width:900px) {
+    .all-todos{
+        grid-template-columns: 1fr 1fr;
+    }
+}
+@media (max-width:700px) {
+    header{
+        height: 70px;
+    }
+
+    .app-container{
+        margin-top: 1.4rem;
+        margin-bottom: 1.4rem;
+        gap: 1.4rem;
+        padding: 0.4rem;
+    }
+
     .all-todos{
         grid-template-columns: 1fr;
     }
-}
-@media (max-width:800px) {
-    .app .form{
-        flex-direction: column;
+    .all-todos > div{
+        padding: 0.7rem;
     }
-
-    .form input{
-        margin-top: 10px;
-        padding: 1rem;
-    }
-
-    .form .btn{
-        width: 100%;
-        padding: 0.8rem;
+    .all-todos li{
+        padding: 7px 0.7rem;
     }
 }

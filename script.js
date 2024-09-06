@@ -1,214 +1,295 @@
-function changeMood() {
-    let body = document.body;
-    let moodButton = document.getElementById("mood-change");
-    if (body.classList.contains("light-mode")) {
-        body.classList.remove("light-mode");
-        body.classList.add("dark-mode");
-    } else {
-        body.classList.remove("dark-mode");
-        body.classList.add("light-mode");
-    }
-}
+// Variables
 
-// App Logic
+let pendingArray = JSON.parse(localStorage.getItem('pendingStore')) || [];
+let processArray = JSON.parse(localStorage.getItem('processStore')) || [];;
+let completeArray = JSON.parse(localStorage.getItem('completeStore')) || [];;
 
-let todoArray = JSON.parse(localStorage.getItem('pendingStore')) || [];
-let processArray = JSON.parse(localStorage.getItem('processStore')) || [];
-let completeArray = JSON.parse(localStorage.getItem('completeStore')) || [];
+let userInput = document.getElementById('user-input');
+let addTaskButton = document.getElementById('add-task');
+let messageBox = document.getElementById('message-boxx');
+let message = document.getElementById('message');
 
-let userInput = document.getElementById("user-input");
-let submitButton = document.getElementById("submit-btn");
+//container
+let pendingContainer = document.getElementById('pending-box');
+let processContainer = document.getElementById('process-box');
+let completeContainer = document.getElementById('complete-box');
 
-let processContainer = document.getElementById("process");
-let pendingContainer = document.getElementById("pending");
-let completeContainer = document.getElementById("complete");
+//removeButtons
+let removePendingBtn = document.getElementsByClassName('remove-pending');
+let removeProcessBtn = document.getElementsByClassName('remove-process');
+let removeCompleteBtn = document.getElementsByClassName('remove-complete');
 
-let removePendingButton = document.getElementsByClassName("remove-pending");
-let removeProcessButton = document.getElementsByClassName("remove-process");
-let removeCompleteButton = document.getElementsByClassName("remove-complete");
+//Send Buttons
+let sendToProcessBtn = document.getElementsByClassName('send-to-process');
+let sendToProcessBtn2 = document.getElementsByClassName('send-to-process2');
+let sendToPendingBtn = document.getElementsByClassName('send-to-pending');
+let sendToompleteBtn = document.getElementsByClassName('send-to-complete');
 
-let sendToPendingButton = document.getElementsByClassName("send-to-pending");
-let sendToProcessButton = document.getElementsByClassName("send-to-process");
-let sendToProcessButton2 = document.getElementsByClassName("send-to-process2");
-let sendToCompleteButton = document.getElementsByClassName("send-to-complete");
-
-
-
-document.getElementById('user-input').addEventListener('keyup', function(event) {
-    if (event.key === "Enter") {
-        addToDo();
-        
-    }
-});
-
-function addToDo() {
-    let errorBox = document.querySelector(".error-box");
+function addTask() {
     let newTodo = userInput.value.trim();
 
-    if (newTodo === "") {
-        errorBox.innerHTML = '<h3>Please Input Your Todo.</h3>';
-        errorBox.classList.add("show");
+    if (userInput.value === "") {
+        message.textContent = 'Enter Somthings to add.';
+        messageBox.style.display = 'block';
+        messageBox.style.backgroundColor = 'red';
         setTimeout(() => {
-            errorBox.classList.remove("show");
+            messageBox.style.display = 'none';
         }, 2000);
-    } else if (todoArray.includes(newTodo)) {
-        errorBox.innerHTML = '<h3>Todo already exists!</h3>';
-        errorBox.classList.add("show");
+    } else if (pendingArray.includes(newTodo)) {
+        messageBox.style.display = 'block';
+        message.textContent = 'Todo Already Exists!';
+        messageBox.style.backgroundColor = 'red'
         userInput.value = '';
         setTimeout(() => {
-            errorBox.classList.remove("show");
-        }, 2000);
+            messageBox.style.display = 'none';
+            messageBox.style.backgroundColor = '#ffd000'
+        }, 1400);
     } else {
-        todoArray.push(newTodo);
-        userInput.value = "";
-        errorBox.innerHTML = '<h3>Successfully Added</h3>';
-        errorBox.classList.add("success");
-        renderToDo();
+        let userValue = userInput.value;
+        pendingArray.push(userValue);
+        userInput.value = '';
+        messageBox.style.display = 'block';
+        message.textContent = 'Successfuly Added.';
+        messageBox.style.backgroundColor = 'green'
         setTimeout(() => {
-            errorBox.classList.remove("success");
-        }, 2000);
-        localStorage.setItem('pendingStore', JSON.stringify(todoArray));
+            messageBox.style.display = 'none';
+            messageBox.style.backgroundColor = '#ffd000'
+        }, 1400);
+
+        render();
+        localStorage.setItem('pendingStore', JSON.stringify(pendingArray));
     }
 }
 
-function renderToDo() {
-    // Pending Items
-    pendingContainer.innerHTML = "";
-    todoArray.forEach((todo, index) => {
-        let liElement = document.createElement("li");
-        liElement.innerHTML = `${todo} <span><img data-set="${index}" class="edit-pending" src="edit.png" alt=""><img data-set="${index}" class="remove-pending" src="delete.png" alt=""><img data-set="${index}" class="send-to-process" src="next.png" alt=""></span>`;
-        pendingContainer.appendChild(liElement);
+addTaskButton.addEventListener('click', addTask)
+userInput.addEventListener('change', addTask)
+
+function render() {
+    // Clear the container before rendering
+    pendingContainer.innerHTML = '';
+    processContainer.innerHTML = '';
+    completeContainer.innerHTML = '';
+
+    // Rendering All Pending Templates
+    // Pending ToDo
+    pendingArray.forEach((todo, index) => {
+        let item = document.createElement('li');
+        item.innerHTML = `${todo} <span><img data-set="${index}" class="edit-pending" src="./Asset/edit.png" alt=""><img data-set="${index}" class="remove-pending" src="./Asset/delete.png" alt=""><img data-set="${index}" class="send-to-process" src="./Asset/next.png" alt=""></span>`;
+        pendingContainer.appendChild(item);
     });
 
-    // Process Items
-    processContainer.innerHTML = "";
+    // Process ToDo
     processArray.forEach((todo, index) => {
-        let liElement = document.createElement("li");
-        liElement.innerHTML = `${todo} <span><img data-set="${index}" class="send-to-pending" src="previous.png" alt=""><img data-set="${index}" class="remove-process" src="delete.png" alt=""><img data-set="${index}" class="send-to-complete" src="next.png" alt=""></span>`;
-        processContainer.appendChild(liElement);
+        let item = document.createElement('li');
+        item.innerHTML = `${todo} <span><img data-set="${index}" class="send-to-pending" src="./Asset/previous.png" alt=""><img data-set="${index}" class="remove-process" src="./Asset/delete.png" alt=""><img data-set="${index}" class="send-to-complete" src="./Asset/next.png" alt=""></span>`;
+        processContainer.appendChild(item);
     });
 
-    // Complete Items
-    completeContainer.innerHTML = "";
+    // Complete Todo
     completeArray.forEach((todo, index) => {
-        let liElement = document.createElement("li");
-        liElement.innerHTML = `${todo} <span><img data-set="${index}" class="send-to-process2" src="previous.png" alt=""><img data-set="${index}" class="remove-complete" src="delete.png" alt=""></span>`;
-        completeContainer.appendChild(liElement);
+        let item = document.createElement('li');
+        item.innerHTML = `${todo} <span><img data-set="${index}" class="send-to-process2" src="./Asset/previous.png" alt=""><img data-set="${index}" class="remove-complete" src="./Asset/checked.png" alt="">`;
+        completeContainer.appendChild(item);
     });
 
+    //Removing ToDo
+    //Pending
+    Array.from(removePendingBtn).forEach(button => {
+        button.addEventListener('click', (e) => {
+            let index = e.target.getAttribute('data-set');
+            pendingArray.splice(index, 1)
+            render();
+            messageBox.style.display = 'block';
+            message.textContent = 'Successfuly Removed.';
+            messageBox.style.backgroundColor = 'red'
+            setTimeout(() => {
+                messageBox.style.display = 'none';
+                messageBox.style.backgroundColor = '#ffd000'
+            }, 1400);
+            localStorage.setItem('pendingStore', JSON.stringify(pendingArray));
+        })
+    });
 
-    // Edit Button Events
+    //Process
+    Array.from(removeProcessBtn).forEach(button => {
+        button.addEventListener('click', (e) => {
+            let index = e.target.getAttribute('data-set');
+            processArray.splice(index, 1)
+            render();
+            messageBox.style.display = 'block';
+            message.textContent = 'Successfuly Removed.';
+            messageBox.style.backgroundColor = 'red'
+            setTimeout(() => {
+                messageBox.style.display = 'none';
+                messageBox.style.backgroundColor = '#ffd000'
+            }, 1400);
+            localStorage.setItem('processStore', JSON.stringify(processArray));
+        })
+    });
+
+    //complete
+    Array.from(removeCompleteBtn).forEach(button => {
+        button.addEventListener('click', (e) => {
+            let index = e.target.getAttribute('data-set');
+            completeArray.splice(index, 1)
+            render();
+            messageBox.style.display = 'block';
+            message.textContent = 'Successfuly Completed Task.';
+            messageBox.style.backgroundColor = 'green'
+            setTimeout(() => {
+                messageBox.style.display = 'none';
+                messageBox.style.backgroundColor = '#ffd000'
+            }, 1400);
+            localStorage.setItem('completeStore', JSON.stringify(completeArray));
+        })
+    });
+
+    //Sending ToDo
+    // Pending to Process
+    Array.from(sendToProcessBtn).forEach(button => {
+        button.addEventListener('click', (e) => {
+            let index = e.target.getAttribute('data-set');
+            let moveTodo = pendingArray.splice(index, 1);
+            processArray.push(moveTodo[0])
+            render();
+            messageBox.style.display = 'block';
+            message.textContent = 'Successfuly Move To Process.';
+            messageBox.style.backgroundColor = 'black'
+            setTimeout(() => {
+                messageBox.style.display = 'none';
+                messageBox.style.backgroundColor = '#ffd000'
+            }, 1400);
+
+            localStorage.setItem('pendingStore', JSON.stringify(pendingArray));
+            localStorage.setItem('processStore', JSON.stringify(processArray));
+        })
+    });
+
+    // complete to Process
+    Array.from(sendToProcessBtn2).forEach(button => {
+        button.addEventListener('click', (e) => {
+            let index = e.target.getAttribute('data-set');
+            let moveTodo = completeArray.splice(index, 1);
+            processArray.push(moveTodo[0])
+            render();
+            messageBox.style.display = 'block';
+            message.textContent = 'Successfuly Move To Process.';
+            messageBox.style.backgroundColor = 'black'
+            setTimeout(() => {
+                messageBox.style.display = 'none';
+                messageBox.style.backgroundColor = '#ffd000'
+            }, 1400);
+            localStorage.setItem('pendingStore', JSON.stringify(completeArray));
+            localStorage.setItem('processStore', JSON.stringify(processArray));
+        })
+    });
+
+    // Process to Pending
+    Array.from(sendToPendingBtn).forEach(button => {
+        button.addEventListener('click', (e) => {
+            let index = e.target.getAttribute('data-set');
+            let moveTodo = processArray.splice(index, 1);
+            pendingArray.push(moveTodo[0])
+            render();
+            messageBox.style.display = 'block';
+            message.textContent = 'Successfuly Move To Pending.';
+            messageBox.style.backgroundColor = 'black'
+            setTimeout(() => {
+                messageBox.style.display = 'none';
+                messageBox.style.backgroundColor = '#ffd000'
+            }, 1400);
+
+            localStorage.setItem('pendingStore', JSON.stringify(pendingArray));
+            localStorage.setItem('processStore', JSON.stringify(processArray));
+        })
+    });
+
+    // Process to complete
+    Array.from(sendToompleteBtn).forEach(button => {
+        button.addEventListener('click', (e) => {
+            let index = e.target.getAttribute('data-set');
+            let moveTodo = processArray.splice(index, 1);
+            completeArray.push(moveTodo[0])
+            render();
+            messageBox.style.display = 'block';
+            message.textContent = 'Successfuly Completed.';
+            messageBox.style.backgroundColor = 'black'
+            setTimeout(() => {
+                messageBox.style.display = 'none';
+                messageBox.style.backgroundColor = '#ffd000'
+            }, 1400);
+            localStorage.setItem('completeStore', JSON.stringify(completeArray));
+            localStorage.setItem('processStore', JSON.stringify(processArray));
+        })
+    });
+
     document.querySelectorAll('.edit-pending').forEach(editButton => {
         editButton.addEventListener('click', (e) => {
-            let index = e.target.getAttribute('data-set');
+            let index = parseInt(e.target.getAttribute('data-set')); // Ensure index is a number
             let promptBox = document.querySelector(".prompt");
             let updateInput = document.getElementById("update-todo");
+            let updateBTN = document.getElementById("update-btn");
 
-            // Show the prompt box
             promptBox.classList.add("show");
 
-            // Pre-fill input with the current to-do item
-            updateInput.value = todoArray[index];
+            updateInput.value = pendingArray[index];
 
-            // Handle the update action
-            updateInput.addEventListener('keypress', function(event) {
-                if (event.key === 'Enter') {
-                    if (updateInput.value.trim() !== "") {
-                        todoArray[index] = updateInput.value.trim();
-                        renderToDo();
-                        localStorage.setItem('pendingStore', JSON.stringify(todoArray));
+            // Flag to ensure event listeners are only added once
+            let eventListenerAdded = false;
 
-                        // Hide the prompt box
+            function updateTodoItem() {
+                let updateTodo = updateInput.value.trim();
+                if (updateTodo !== "") {
+                    
+                    const todoExists = pendingArray.some((todo, i) => i !== index && todo.toLowerCase() === updateTodo.toLowerCase());
+
+                    if (todoExists) {
+                        promptBox.classList.remove("show");
+                        messageBox.style.display = 'block';
+                        message.textContent = 'Todo Already Exists!';
+                        messageBox.style.backgroundColor = 'red';
+                        updateInput.value = '';
+                        setTimeout(() => {
+                            messageBox.style.display = 'none';
+                            messageBox.style.backgroundColor = '#ffd000';
+                        }, 1400);
+                    } else {
+                        // Update the to-do item
+                        pendingArray[index] = updateTodo;
+                        render();
+                        localStorage.setItem('pendingStore', JSON.stringify(pendingArray));
+
                         promptBox.classList.remove("show");
 
-                        // Show success message in error box
-                        let errorBox = document.querySelector(".error-box");
-                        errorBox.innerHTML = '<h3>To-do item updated successfully!</h3>';
-                        errorBox.classList.add("success");
+                        messageBox.style.display = 'block';
+                        message.textContent = 'To-do item updated successfully!';
+                        messageBox.style.backgroundColor = 'green';
                         setTimeout(() => {
-                            errorBox.classList.remove("success");
-                        }, 2000);
+                            messageBox.style.display = 'none';
+                            messageBox.style.backgroundColor = '#ffd000';
+                        }, 1400);
                     }
                 }
-            });
-        });
-    });
-    // Remove Buttons Events
-    Array.from(removePendingButton).forEach(removeButton => {
-        removeButton.addEventListener('click', (e) => {
-            let index = e.target.getAttribute('data-set');
-            todoArray.splice(index, 1);
-            renderToDo();
-            localStorage.setItem('pendingStore', JSON.stringify(todoArray));
-        });
-    });
+            }
 
-    Array.from(removeProcessButton).forEach(removeButton => {
-        removeButton.addEventListener('click', (e) => {
-            let index = e.target.getAttribute('data-set');
-            processArray.splice(index, 1);
-            renderToDo();
-            localStorage.setItem('processStore', JSON.stringify(processArray));
+            // Only add event listeners if they haven't been added already
+            if (!eventListenerAdded) {
+                updateInput.addEventListener('keypress', function (event) {
+                    if (event.key === 'Enter') {
+                        updateTodoItem();
+                    }
+                });
+
+                updateBTN.addEventListener('click', function () {
+                    updateTodoItem();
+                });
+
+                eventListenerAdded = true;  // Mark that the event listeners have been added
+            }
         });
     });
 
-    Array.from(removeCompleteButton).forEach(removeButton => {
-        removeButton.addEventListener('click', (e) => {
-            let index = e.target.getAttribute('data-set');
-            completeArray.splice(index, 1);
-            renderToDo();
-            localStorage.setItem('completeStore', JSON.stringify(completeArray));
-        });
-    });
-
-    // Send Buttons Events
-    Array.from(sendToProcessButton).forEach(sendButton => {
-        sendButton.addEventListener('click', (e) => {
-            let index = e.target.getAttribute('data-set');
-            let sendItem = todoArray.splice(index, 1)[0]; // Access the first element of the returned array
-            processArray.push(sendItem);
-            renderToDo();
-
-            localStorage.setItem('pendingStore', JSON.stringify(todoArray));
-            localStorage.setItem('processStore', JSON.stringify(processArray));
-        });
-    });
-
-    Array.from(sendToProcessButton2).forEach(sendButton => {
-        sendButton.addEventListener('click', (e) => {
-            let index = e.target.getAttribute('data-set');
-            let sendItem = completeArray.splice(index, 1)[0];
-            processArray.push(sendItem);
-            renderToDo();
-
-            localStorage.setItem('completeStore', JSON.stringify(completeArray));
-            localStorage.setItem('processStore', JSON.stringify(processArray));
-        });
-    });
-
-    Array.from(sendToPendingButton).forEach(sendButton => {
-        sendButton.addEventListener('click', (e) => {
-            let index = e.target.getAttribute('data-set');
-            let sendItem = processArray.splice(index, 1)[0];
-            todoArray.push(sendItem);
-            renderToDo();
-
-            localStorage.setItem('pendingStore', JSON.stringify(todoArray));
-            localStorage.setItem('processStore', JSON.stringify(processArray));
-        });
-    });
-
-    Array.from(sendToCompleteButton).forEach(sendButton => {
-        sendButton.addEventListener('click', (e) => {
-            let index = e.target.getAttribute('data-set');
-            let sendItem = processArray.splice(index, 1)[0];
-            completeArray.push(sendItem);
-            renderToDo();
-
-            localStorage.setItem('completeStore', JSON.stringify(completeArray));
-            localStorage.setItem('processStore', JSON.stringify(processArray));
-        });
-    });
 }
 
-renderToDo();
+
+render();
